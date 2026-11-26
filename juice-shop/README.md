@@ -1,3 +1,48 @@
+# OWASP Juice Shop — Web Application Pentest Write-up
+
+**Target:** OWASP Juice Shop (intentionally vulnerable app), running locally in Docker
+**Tools:** Burp Suite Community (Proxy, Repeater, Decoder), curl, bash
+**Date:** 26 Nov 2026
+**Scope:** localhost:3000 only — my own lab environment
+
+## Summary
+| # | Vulnerability | OWASP Top 10 (2021) | Severity |
+|---|---------------|---------------------|----------|
+| 1 | SQL Injection in login | A03 Injection | Critical |
+| 2 | IDOR — view other users' baskets | A01 Broken Access Control | High |
+| 3 | Sensitive data (password hash) in JWT | A02 Cryptographic Failures | High |
+| 4 | Weak admin password, no rate limiting | A07 Identification & Authentication Failures | High |
+| 5 | Missing server-side validation (0-star rating) | A04 Insecure Design | Low |
+| 6 | DOM-based XSS in search | A03 Injection | Medium |
+
+---
+
+## 1. SQL Injection — Login as Admin
+
+**Where:** `POST /rest/user/login`, `email` field
+
+**Steps:**
+1. Opened the login page and entered this as the email, with any password:
+   ```
+   ' OR 1=1--
+   ```
+2. Logged in as the first user in the database — the administrator.
+3. Captured the request in Burp Proxy and replayed it in Repeater to compare
+   a normal failed login with the injected one.
+
+**Why it works:** user input is concatenated directly into the SQL query:
+```sql
+SELECT * FROM Users WHERE email = '' OR 1=1--' AND password = '...'
+```
+- `'` closes the email string
+- `OR 1=1` is always true, so every user matches
+- `--` comments out the password check
+- The database returns the first user: the admin
+
+**Impact:** full authentication bypass — an attacker logs in as admin without credentials.
+
+**Fix:** use parameterised queries / prepared statements so input is never
+treated as SQL code; never build SQL from raw input.
 ## 2. IDOR — View Another User's Basket
 
 **Where:** `GET /rest/basket/{id}`
@@ -130,4 +175,9 @@ and add a Content Security Policy.
 ---
 
 ## Key takeaways
- I solved all 5 challenges for the first time and using burp suite , the repeater, intruder pages, chnaging login credentials, retrieving passwords were fun!!
+ - First hands-on web pentest: found 6 vulnerabilities across 5 OWASP Top 10
+  categories using Burp Suite Proxy, Repeater and Decoder.
+- When Burp Community's Intruder was blocked, I wrote my own bash/curl
+  brute-force loop — the tool matters less than understanding the request.
+- Biggest lesson: the server must never trust the client. Every bug here
+  (SQLi, IDOR, 0-star rating, XSS) came from trusting user input.
