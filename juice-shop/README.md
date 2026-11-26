@@ -44,7 +44,7 @@ The payload also showed `"totpSecret":""` — the admin has no 2FA.
 role. Store passwords with a slow, salted algorithm (bcrypt or Argon2).
 Enforce 2FA for admin accounts.
 
-![JWT decoded](screenshots/03-jwt-decoded.png)
+![JWT decoded](screenshots/Screenshot_2026-11-26_01_14_02.png)
 
 ---
 
@@ -125,7 +125,7 @@ or showing fake login forms.
 default escaping) instead of raw HTML, sanitise where HTML is required,
 and add a Content Security Policy.
 
-![DOM XSS](screenshots//Screenshot_2026-11-26_01_30_03.png)
+![DOM XSS](screenshots/Screenshot_2026-11-26_01_30_04.png)
 
 ---
 
