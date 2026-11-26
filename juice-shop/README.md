@@ -43,6 +43,9 @@ SELECT * FROM Users WHERE email = '' OR 1=1--' AND password = '...'
 
 **Fix:** use parameterised queries / prepared statements so input is never
 treated as SQL code; never build SQL from raw input.
+
+![Login Admin](screenshots/Login_Admin.png)
+
 ## 2. IDOR — View Another User's Basket
 
 **Where:** `GET /rest/basket/{id}`
@@ -63,7 +66,7 @@ a number — a privacy breach that scales to all users.
 **Fix:** enforce object-level authorisation on the server: look up the basket
 by the user ID from the verified session/token, not from the URL.
 
-![View Basket](screenshots//Screenshot_2026-11-26_01_26_49.png)
+![View Basket](screenshots/View_basket.png)
 
 ---
 
@@ -89,7 +92,6 @@ The payload also showed `"totpSecret":""` — the admin has no 2FA.
 role. Store passwords with a slow, salted algorithm (bcrypt or Argon2).
 Enforce 2FA for admin accounts.
 
-![JWT decoded](screenshots/Screenshot_2026-11-26_01_14_02.png)
 
 ---
 
@@ -121,7 +123,7 @@ allows unlimited login attempts with no lockout, delay, or CAPTCHA.
 **Fix:** enforce strong password rules, rate-limit and temporarily lock
 accounts after repeated failures, and require MFA for admins.
 
-![Password Strength](screenshots//Screenshot_2026-11-26_01_30_30.png)
+![Password Strength](screenshots/Password_Strength.png)
 
 ---
 
@@ -143,6 +145,8 @@ leads to fraud or privilege escalation.
 
 **Fix:** validate every input on the server; treat client-side checks as
 convenience only, never as security.
+
+![Zero Stars](screenshots/Zero_Stars.png)
 
 (Lesson learned: Juice Shop's background socket.io requests filled Burp's
 Intercept queue — solved by adding an interception rule to exclude socket.io.)
@@ -170,7 +174,7 @@ or showing fake login forms.
 default escaping) instead of raw HTML, sanitise where HTML is required,
 and add a Content Security Policy.
 
-![DOM XSS](screenshots/Screenshot_2026-11-26_01_30_04.png)
+![DOM XSS](screenshots/DOM_XSS.png)
 
 ---
 
