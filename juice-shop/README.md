@@ -102,7 +102,7 @@ convenience only, never as security.
 (Lesson learned: Juice Shop's background socket.io requests filled Burp's
 Intercept queue — solved by adding an interception rule to exclude socket.io.)
 
-![Zero Stars](screenshots/05-zero-stars.png)
+
 
 ---
 
@@ -130,5 +130,4 @@ and add a Content Security Policy.
 ---
 
 ## Key takeaways
-- (write 3 lines yourself — e.g. what surprised you, which bug was easiest
-  to find, and what you'd test next)
+ I solved all 5 challenges for the first time and using burp suite , the repeater, intruder pages, chnaging login credentials, retrieving passwords were fun!!
