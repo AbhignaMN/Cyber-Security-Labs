@@ -76,7 +76,7 @@ allows unlimited login attempts with no lockout, delay, or CAPTCHA.
 **Fix:** enforce strong password rules, rate-limit and temporarily lock
 accounts after repeated failures, and require MFA for admins.
 
-![Password Strength](screenshots/04-password-strength.png)
+![Password Strength](screenshots/Screenshot_2026-11-26_01_30_30.png)
 
 ---
 
@@ -125,7 +125,7 @@ or showing fake login forms.
 default escaping) instead of raw HTML, sanitise where HTML is required,
 and add a Content Security Policy.
 
-![DOM XSS](screenshots/06-dom-xss.png)
+![DOM XSS](screenshots/creenshot_2026-11-26_01_30_03.png)
 
 ---
 
