@@ -18,7 +18,7 @@ a number — a privacy breach that scales to all users.
 **Fix:** enforce object-level authorisation on the server: look up the basket
 by the user ID from the verified session/token, not from the URL.
 
-![View Basket](screenshots/02-view-basket-idor.png)
+![View Basket](screenshots//Screenshot_2026-11-26_01_26_49.png)
 
 ---
 
